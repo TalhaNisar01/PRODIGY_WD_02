@@ -1,33 +1,42 @@
-let [milliseconds,seconds,minutes,hours] = [0,0,0,0];
+let [milliseconds, seconds, minutes, hours] = [0, 0, 0, 0];
 let timerRef = document.querySelector('.timerDisplay');
+let lapsContainer = document.querySelector('.laps');
 let int = null;
 
-document.getElementById('startTimer').addEventListener('click', ()=>{
-    if(int!==null){
+document.getElementById('startTimer').addEventListener('click', () => {
+    if (int !== null) {
         clearInterval(int);
     }
-    int = setInterval(displayTimer,10);
+    int = setInterval(displayTimer, 10);
 });
 
-document.getElementById('pauseTimer').addEventListener('click', ()=>{
+document.getElementById('pauseTimer').addEventListener('click', () => {
     clearInterval(int);
 });
 
-document.getElementById('resetTimer').addEventListener('click', ()=>{
+document.getElementById('resetTimer').addEventListener('click', () => {
     clearInterval(int);
-    [milliseconds,seconds,minutes,hours] = [0,0,0,0];
+    [milliseconds, seconds, minutes, hours] = [0, 0, 0, 0];
     timerRef.innerHTML = '00 : 00 : 00 : 000 ';
+    lapsContainer.innerHTML = '';
 });
 
-function displayTimer(){
-    milliseconds+=10;
-    if(milliseconds == 1000){
+document.getElementById('lapTimer').addEventListener('click', () => {
+    const lapTime = document.createElement('div');
+    lapTime.classList.add('lap');
+    lapTime.innerText = timerRef.innerHTML;
+    lapsContainer.appendChild(lapTime);
+});
+
+function displayTimer() {
+    milliseconds += 10;
+    if (milliseconds == 1000) {
         milliseconds = 0;
         seconds++;
-        if(seconds == 60){
+        if (seconds == 60) {
             seconds = 0;
             minutes++;
-            if(minutes == 60){
+            if (minutes == 60) {
                 minutes = 0;
                 hours++;
             }
